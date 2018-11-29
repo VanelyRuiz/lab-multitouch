@@ -74,6 +74,20 @@ class MainActivity : AppCompatActivity() {
                 , MotionEvent.ACTION_CANCEL //aborted gesture
                 , MotionEvent.ACTION_OUTSIDE //outside bounds
             -> return super.onTouchEvent(event)
+            MotionEvent.ACTION_POINTER_DOWN
+            -> {
+                val actionIndex = MotionEventCompat.getActionIndex(event)
+                val pointerId = MotionEventCompat.getPointerId(event, actionIndex)
+                Log.v(TAG, "Subsequent finger down, pointerID: $pointerId")
+                return true
+            }
+            MotionEvent.ACTION_POINTER_UP
+            -> {
+                val actionIndex = MotionEventCompat.getActionIndex(event)
+                val pointerId = MotionEventCompat.getPointerId(event, actionIndex)
+                Log.v(TAG, "Subsequent finger up, pointerId: $pointerId")
+                return true
+            }
             else -> return super.onTouchEvent(event)
         }
     }
